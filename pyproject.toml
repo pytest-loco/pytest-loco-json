@@ -1,0 +1,164 @@
+[project]
+name = "pytest-loco-json"
+version = "1.3.1"
+description = "JSON support for pytest-loco"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Plugins",
+    "Framework :: Pytest",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Utilities",
+]
+authors = [
+    {name = "Mikhalev Oleg", email = "mhalairt@gmail.com"}
+]
+license = "BSD-2-Clause"
+license-files = ["LICENSE"]
+readme = "README.md"
+requires-python = ">3.13,<4"
+dependencies = [
+    "orjson (>=3.11.7,<4.0.0)",
+    "pytest-loco (>=1.3.1)",
+    "python-jsonpath (>=2.0.2,<3.0.0)",
+]
+
+[project.urls]
+"Source" = "https://github.com/pytest-loco/pytest-loco-json"
+"Issues" = "https://github.com/pytest-loco/pytest-loco-json/issues"
+
+[project.entry-points.loco_plugins]
+pytest_loco_json = "pytest_loco_json.plugin:json"
+
+[tool.poetry]
+packages = [{include = "pytest_loco_json", from = "src"}]
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+mypy = {extras = ["mypyc", "reports", "stubgen"], version = "^1.19.1"}
+pre-commit = "^4.5.1"
+ruff = ">=0.14.11,<0.15.0"
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "^9.0.2"
+pytest-cov = "^7.0.0"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+
+[tool.ruff.format]
+docstring-code-format = true
+quote-style = "single"
+
+[tool.ruff.lint]
+select = [
+    "ANN",     # flake8-annotations
+    "ASYNC",   # flake8-async
+    "S",       # flake8-bandit
+    "A",       # flake8-builtins
+    "B",       # flake8-bugbear
+    "COM",     # flake8-commas
+    "C4",      # flake8-comprehensions
+    "T20",     # flake8-print
+    "Q",       # flake8-quotes
+    "RSE",     # flake8-raise
+    "SLF",     # flake8-self
+    "SIM",     # flake8-simplify
+    "TC",      # flake8-type-checking
+    "ARG",     # flake8-unused-arguments
+    "I",       # isort
+    "E", "W",  # pycodestyle
+    "D",       # pydocstyle
+    "F",       # pyflakes
+    "PL",      # pylint
+    "UP",      # pyupgrade
+    "RUF",     # ruff
+]
+
+[tool.ruff.lint.isort]
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "loco",
+    "first-party",
+    "local-folder",
+]
+known-first-party = ["pytest_loco_json"]
+
+[tool.ruff.lint.isort.sections]
+loco = ["pytest_loco"]
+
+[tool.ruff.lint.flake8-annotations]
+allow-star-arg-any = true
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
+multiline-quotes = "single"
+
+[tool.ruff.lint.flake8-type-checking]
+quote-annotations = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+python_version = "3.13"
+mypy_path = ["src"]
+packages = ["pytest_loco_json"]
+strict = true
+exclude_gitignore = true
+explicit_package_bases = true
+pretty = true
+show_error_codes = true
+color_output = true
+
+[[tool.mypy.overrides]]
+module = "yaml.*"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "9.0.0"
+testpaths = ["tests"]
+addopts = [
+    "-q",
+    "--cov=pytest_loco_json",
+    "--cov-report=term",
+    "--cov-report=html",
+    "--strict-markers",
+    "--strict-config",
+]
+
+[tool.coverage.run]
+source = ["pytest_loco_json"]
+branch = true
+parallel = true
+concurrency = ["multiprocessing"]
+
+[tool.coverage.paths]
+source = [
+    "src/pytest_loco_json",
+    "**/site-packages/pytest_loco_json"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if typing.TYPE_CHECKING:",
+    "if TYPE_CHECKING:",
+]
+fail_under = 80
+show_missing = true
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

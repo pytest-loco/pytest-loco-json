@@ -1,0 +1,26 @@
+---
+spec: case
+title: Decoding values
+
+---
+action: empty
+title: Read JSON content from file
+export:
+  jsonText: !textFile tests/test.json
+
+---
+action: empty
+title: Try to decode JSON
+export:
+  jsonValue: !load
+    source: !var jsonText
+    format: json
+expect:
+- title: Check JSON value
+  value: !var jsonValue
+  partialMatch: yes
+  match:
+  - name: Molecule Man
+    age: 29
+  - name: Madame Uppercut
+    age: 39
