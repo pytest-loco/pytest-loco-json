@@ -1,0 +1,43 @@
+---
+spec: case
+title: Encoding values
+
+---
+action: empty
+title: Make JSON value
+export:
+  jsonValue:
+    name: Molecule Man
+    age: 29
+    secretIdentity: Dan Jukes
+    powers:
+    - Radiation resistance
+    - Turning tiny
+    - Radiation blast
+
+---
+action: empty
+title: Try to encode JSON
+export:
+  jsonText: !dump
+    source: !var jsonValue
+    format: json
+expect:
+  - title: Check JSON content
+    value: !var jsonText
+    match: '{"name":"Molecule Man","age":29,"secretIdentity":"Dan Jukes","powers":["Radiation
+      resistance","Turning tiny","Radiation blast"]}'
+
+---
+action: empty
+title: Try to encode JSON with keys sorting
+export:
+  jsonText: !dump
+    source: !var jsonValue
+    format: json
+    sortKeys: yes
+expect:
+  - title: Check sorted JSON content
+    value: !var jsonText
+    match: '{"age":29,"name":"Molecule Man","powers":["Radiation resistance","Turning
+      tiny","Radiation blast"],"secretIdentity":"Dan Jukes"}'

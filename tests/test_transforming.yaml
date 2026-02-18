@@ -1,0 +1,95 @@
+---
+spec: case
+title: Decoding values with transform
+
+---
+action: empty
+title: Read JSON content from file
+export:
+  jsonText: !textFile tests/test.json
+
+---
+action: empty
+title: Try to decode JSON and select all
+export:
+  jsonValue: !load
+    source: !var jsonText
+    format: json
+    query: '$[?(@.age<30)].powers[*]'
+    exactOne: no
+expect:
+- title: Check result is list of powers
+  value: !var jsonValue
+  match:
+  - Radiation resistance
+  - Turning tiny
+  - Radiation blast
+
+---
+action: empty
+title: Try to decode JSON and select first match
+export:
+  jsonValue: !load
+    source: !var jsonText
+    format: json
+    query: '$[*].name'
+    exactMode: first
+expect:
+- title: Check select first of names
+  value: !var jsonValue
+  match: Molecule Man
+
+---
+action: empty
+title: Try to decode JSON and select last match
+export:
+  jsonValue: !load
+    source: !var jsonText
+    format: json
+    query: '$[*].name'
+    exactMode: last
+expect:
+- title: Check select last of names
+  value: !var jsonValue
+  match: Madame Uppercut
+
+---
+action: empty
+title: Try to decode JSON and select all with empty result
+export:
+  jsonValue: !load
+    source: !var jsonText
+    format: json
+    query: '$[?(@.age>50)].secretIdentity'
+    exactOne: no
+expect:
+- title: Check result is empty list on empty
+  value: !var jsonValue
+  match: []
+
+---
+action: empty
+title: Try to decode JSON and select one with empty result
+export:
+  jsonValue: !load
+    source: !var jsonText
+    format: json
+    query: '$[?(@.age>50)].secretIdentity'
+expect:
+- title: Check result is null on empty
+  value: !var jsonValue
+  match: null
+
+---
+action: empty
+title: Try to decode JSON and select one with unknown mode
+export:
+  jsonValue: !load
+    source: !var jsonText
+    format: json
+    query: '$[?(@.age>10)].secretIdentity'
+    exactMode: even-last
+expect:
+- title: Check result is null with unknown mode
+  value: !var jsonValue
+  match: null

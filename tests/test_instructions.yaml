@@ -1,0 +1,42 @@
+---
+spec: case
+title: Querying values by instructions
+vars:
+  ageLimit: 30
+
+---
+action: empty
+title: Read JSON content from file
+export:
+  jsonData: !binaryFile tests/test.json
+
+---
+action: empty
+title: Try to decode JSON
+export:
+  jsonValue: !load
+    source: !var jsonData
+    format: json
+
+---
+action: empty
+title: Try to select from context by instruction
+export:
+  resultValues: !jsonpath jsonValue $[?(@.age<_.ageLimit)].powers[*]
+expect:
+- title: Check result is list of powers
+  value: !var resultValues
+  match:
+  - Radiation resistance
+  - Turning tiny
+  - Radiation blast
+
+---
+action: empty
+title: Try to select from context by instruction
+export:
+  resultValues: !jsonpath unknownValue $[?(@.age<_.ageLimit)].powers[*]
+expect:
+- title: Check result is list of powers
+  value: !var resultValues
+  match: []
