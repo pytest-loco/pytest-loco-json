@@ -11,6 +11,15 @@ plugin system and can be enabled by registering the `json` plugin.
 Once enabled, JSON becomes a native data format within the DSL, suitable
 for validation, transformation, and data-driven testing scenarios.
 
+## Install
+
+```sh
+> pip install pytest-loco-json
+```
+
+Requirements:
+- Python 3.13 or higher
+
 ## Encode
 
 The **dump** feature serializes a value from the execution context into a
