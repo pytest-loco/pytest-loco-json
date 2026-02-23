@@ -19,14 +19,11 @@ if TYPE_CHECKING:
     from collections.abc import Mapping
 
 if TYPE_CHECKING:
-    from yaml import BaseLoader
-    from yaml.nodes import ScalarNode
-
-if TYPE_CHECKING:
+    from pytest_loco.schema import YAMLLoader, YAMLNode
     from pytest_loco.values import Deferred, RuntimeValue
 
 
-def jsonpath_query_constructor(loader: 'BaseLoader', node: 'ScalarNode') -> 'Deferred[RuntimeValue]':
+def jsonpath_query_constructor(loader: 'YAMLLoader', node: 'YAMLNode') -> 'Deferred[RuntimeValue]':
     """Construct a precompiled JSONPath expression from a YAML scalar node.
 
     This function is intended to be used as a YAML instruction constructor

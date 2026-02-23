@@ -47,7 +47,7 @@ vars:
     age: 29
 
 ---
-action: pass
+action: empty
 export:
   jsonText: !dump
     source: !var value
@@ -69,7 +69,7 @@ Optionally, you can use the `sortKeys` option:
 
 ```yaml
 ...
-action: pass
+action: empty
 export:
   jsonText: !dump
     source: !var value
@@ -108,13 +108,13 @@ spec: case
 title: Example of decoding a value
 
 ---
-action: pass
+action: empty
 title: Read JSON content from file
 export:
   jsonText: !textFile test.json
 
 ---
-action: pass
+action: empty
 title: Try to decode JSON
 export:
   jsonValue: !load
@@ -171,7 +171,7 @@ Optionally, you can use the `query` transformer with **load**:
 ```yaml
 ...
 
-action: pass
+action: empty
 title: Decode JSON and select the first match
 export:
   jsonValue: !load
@@ -195,7 +195,7 @@ For example:
 ```yaml
 ...
 
-action: pass
+action: empty
 title: Try to decode JSON and select all
 export:
   jsonValue: !load
@@ -217,19 +217,11 @@ expect:
 Inline querying allows JSONPath expressions to be defined directly
 inside the DSL using the dedicated `!jsonpath` instruction.
 
-Inline queries are compiled during schema loading rather than at runtime,
-which improves error reporting and ensures invalid paths fail early.
-Compiled queries can be stored in variables and reused across steps.
-
-This feature is especially useful for complex test suites where the
-same JSONPath expressions appear in multiple places, or when clarity
-and reuse are more important than brevity.
-
 For example:
 
 ```yaml
 ---
-action: pass
+action: empty
 title: Try to select from context by instruction
 export:
   resultValues: !jsonpath jsonValue $[?(@.age<_.ageLimit)].powers[*]

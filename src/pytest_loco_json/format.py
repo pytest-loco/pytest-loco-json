@@ -69,7 +69,7 @@ def json_encode(value: 'RuntimeValue',
         JSON string representation of the value.
     """
     options = 0
-    if params.get('sort_keys'):
+    if params.get('sort'):
         options |= orjson.OPT_SORT_KEYS
 
     return orjson.dumps(value, option=options).decode()
@@ -85,10 +85,11 @@ json_decoder = ContentDecoder(
 json_encoder = ContentEncoder(
     encoder=json_encode,
     parameters=Schema({
-        'sort_keys': Attribute(
+        'sort': Attribute(
             base=bool,
             aliases=['sortKeys'],
             default=False,
+            deferred=False,
             title='Sort JSON object keys',
             description=(
                 'If enabled, JSON object keys are sorted alphabetically '

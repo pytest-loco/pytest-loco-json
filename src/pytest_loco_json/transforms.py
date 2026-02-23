@@ -41,14 +41,14 @@ def jsonpath_query(value: 'JSON', params: 'Mapping[str, RuntimeValue]') -> 'Runt
         return None
 
     items = jsonpath.findall(query, value)
-    if not params.get('exact_one'):
+    if not params.get('one'):
         return items
 
     if not items:
         return None
 
     result = None
-    match params.get('exact_mode'):
+    match params.get('mode'):
         case 'first':
             result = items[0]
         case 'last':
@@ -71,27 +71,30 @@ query = ContentTransformer(
         ),
     ),
     parameters=Schema({
-        'exact_one': Attribute(
+        'one': Attribute(
             base=bool,
             aliases=['exactOne', 'selectOne'],
             default=True,
+            deferred=False,
             title='Return a single value',
             description=(
                 'If enabled, the transformer returns a single matched '
-                'value instead of a list. If multiple matches are found, '
-                'the selection strategy is controlled by `exact_mode`. '
-                'If no matches are found, `None` is returned.'
+                'value instead of a list.\n'
+                'If multiple matches are found, the selection strategy '
+                'is controlled by `exactMode`. If no matches are found, '
+                '`None` is returned.'
             ),
         ),
-        'exact_mode': Attribute(
+        'mode': Attribute(
             base=Literal['first', 'last'],
-            aliases=['exactMode', 'selectMode', 'mode'],
+            aliases=['exactMode', 'selectMode'],
             default='first',
+            deferred=False,
             examples=['first', 'last'],
             title='Single-value selection strategy',
             description=(
                 'Defines how a single value is selected when multiple '
-                'matches are found and ``exact_one`` is enabled. '
+                'matches are found and ``exactOne`` is enabled.\n'
                 'Possible values are ``first`` and ``last``.'
             ),
         ),

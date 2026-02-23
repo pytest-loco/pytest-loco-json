@@ -8,10 +8,7 @@
     "ruff.configurationPreference": "filesystemFirst",
     "ruff.lint.enable": true,
     "yaml.schemas": {
-        ".vscode/loco.schema.json": [
-            "test_*.yaml",
-            "test_*.yml"
-        ]
+        ".vscode/loco.schema.json": "test_*.{yaml,yml}"
     },
     "yaml.customTags": [
         "!base64 scalar",

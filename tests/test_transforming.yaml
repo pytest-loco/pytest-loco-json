@@ -79,17 +79,3 @@ expect:
 - title: Check result is null on empty
   value: !var jsonValue
   match: null
-
----
-action: empty
-title: Try to decode JSON and select one with unknown mode
-export:
-  jsonValue: !load
-    source: !var jsonText
-    format: json
-    query: '$[?(@.age>10)].secretIdentity'
-    exactMode: even-last
-expect:
-- title: Check result is null with unknown mode
-  value: !var jsonValue
-  match: null
