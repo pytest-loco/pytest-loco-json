@@ -966,14 +966,14 @@ testing = ["process-tests", "pytest-xdist", "virtualenv"]
 
 [[package]]
 name = "pytest-loco"
-version = "1.3.5"
+version = "1.3.6"
 description = "Another one YAML-based DSL for testing"
 optional = false
 python-versions = "<4,>=3.13"
 groups = ["main"]
 files = [
-    {file = "pytest_loco-1.3.5-py3-none-any.whl", hash = "sha256:4c6744b5af973adc3edfc2177649c4810e7122370919bcf7919b4e5fdd77b302"},
-    {file = "pytest_loco-1.3.5.tar.gz", hash = "sha256:e065053b74cd2b348c8a0e9bc112b00283554ebf0d0f496291861d8047c78eab"},
+    {file = "pytest_loco-1.3.6-py3-none-any.whl", hash = "sha256:80b459f86c3ce0b7ef153c87341c6ac9df254fffb3e5df0e95f14a4a6be30dad"},
+    {file = "pytest_loco-1.3.6.tar.gz", hash = "sha256:ebcb5730f35e245d8f74556b6579f8a7138680fc1ba9266bf46b858fb0644cf8"},
 ]
 
 [package.dependencies]
@@ -1205,4 +1205,4 @@ platformdirs = ">=3.9.1,<5"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13,<4"
-content-hash = "e047bd242c309ebc20a2bd11d42858825ca3aaf248985a5ce3ea4cff2580218c"
+content-hash = "dd0503e5293d1f10a12491e3484a586a6860652677186f76207111d9bdef0492"
